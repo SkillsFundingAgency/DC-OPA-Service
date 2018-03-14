@@ -2,6 +2,14 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Version>0.1.0</Version>
+    <Authors>DC</Authors>
+    <Company>ESFA</Company>
+    <Description>OPA Service Interface used by DC Projects</Description>
+    <PackageLicenseUrl>https://github.com/SkillsFundingAgency/DC-OPA-Service/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/SkillsFundingAgency/DC-OPA-Service</PackageProjectUrl>
+    <PackageTags>DC OPA Service Interface</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
