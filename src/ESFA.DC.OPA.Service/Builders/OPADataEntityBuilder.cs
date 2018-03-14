@@ -10,8 +10,11 @@ namespace ESFA.DC.OPA.Service.Builders
 {
     public class OPADataEntityBuilder : IOPADataEntityBuilder
     {
-        public IDataEntity CreateOPADataEntity(EntityInstance entityInstance, IDataEntity parentEntity)
+        private DateTime _yearStartDate;
+
+        public IDataEntity CreateOPADataEntity(EntityInstance entityInstance, IDataEntity parentEntity, DateTime yearStartDate)
         {
+            _yearStartDate = yearStartDate;
             var globalEntity = MapOpaToEntity(entityInstance, parentEntity);
 
             return globalEntity;
@@ -63,10 +66,9 @@ namespace ESFA.DC.OPA.Service.Builders
             {
                 IAttributeData attributeData = new AttributeData(attr.GetName(), null);
                 var temporalValue = value as TemporalValue;
-                var startDate = new DateTime(2017, 8, 1); //TODO: date and period values in config?
-                for (int period = 0; period < 12; period++) //TODO: date and period values in config?
+                for (int period = 0; period < 12; period++)
                 {
-                    var date = startDate.AddMonths(period);
+                    var date = _yearStartDate.AddMonths(period);
                     var index = temporalValue.FindChangePointIndex(new ChangePointDate(date.Year, date.Month, date.Day));
                     var val = temporalValue.GetValue(index);
                     attributeData.Changepoints.Add(new TemporalValueItem(date, val, string.Empty));

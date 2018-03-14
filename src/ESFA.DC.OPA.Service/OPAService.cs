@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Reflection;
 using ESFA.DC.OPA.Model.Interface;
 using ESFA.DC.OPA.Service.Interface;
@@ -12,12 +13,14 @@ namespace ESFA.DC.OPA.Service
         private readonly ISessionBuilder _sessionBuilder;
         private readonly IOPADataEntityBuilder _dataEntityBuilder;
         private readonly string _rulebaseZipPath;
+        private readonly DateTime _yearStartDate;
 
-        public OPAService(ISessionBuilder sessionBuilder, IOPADataEntityBuilder dataEntityBuilder, string rulebaseZipPath)
+        public OPAService(ISessionBuilder sessionBuilder, IOPADataEntityBuilder dataEntityBuilder, string rulebaseZipPath, DateTime yearStartDate)
         {
             _sessionBuilder = sessionBuilder;
             _dataEntityBuilder = dataEntityBuilder;
             _rulebaseZipPath = rulebaseZipPath;
+            _yearStartDate = yearStartDate;
         }
 
         public IDataEntity ExecuteSession(IDataEntity globalEntity)
@@ -36,7 +39,7 @@ namespace ESFA.DC.OPA.Service
             session.Think();
 
             var outputGlobalInstance = session.GetGlobalEntityInstance();
-            var outputEntity = _dataEntityBuilder.CreateOPADataEntity(outputGlobalInstance, null);
+            var outputEntity = _dataEntityBuilder.CreateOPADataEntity(outputGlobalInstance, null, _yearStartDate);
 
             return outputEntity;
         }

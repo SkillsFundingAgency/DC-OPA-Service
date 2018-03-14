@@ -496,7 +496,7 @@ namespace ESFA.DC.OPA.Service.Tests.Builders
             EntityInstance entityInstance = TestEntityInstance();
             IDataEntity dataEntity = null;
 
-            return createDataEntity.CreateOPADataEntity(entityInstance, dataEntity);
+            return createDataEntity.CreateOPADataEntity(entityInstance, dataEntity, new DateTime(2017, 8, 1));
         }
 
         private IDataEntity SetupMapToOpDataEntity()
