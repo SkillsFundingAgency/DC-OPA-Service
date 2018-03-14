@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Version>0.1.0</Version>
+    <Authors>DC</Authors>
+    <Company>ESFA</Company>
+    <Description>OPA Service Interface used by DC Projects</Description>
+    <PackageLicenseUrl>https://github.com/SkillsFundingAgency/DC-OPA-Service/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/SkillsFundingAgency/DC-OPA-Service</PackageProjectUrl>
+    <PackageTags>DC OPA Service Interface</PackageTags>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="ESFA.DC.OPA.RunTime.DLLs" Version="0.1.1-beta0001" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="ESFA.DC.OPA.Model.Interface">
+      <HintPath>..\ESFA.DC.OPA.Model.Interface.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>
