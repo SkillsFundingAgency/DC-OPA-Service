@@ -14,10 +14,7 @@
 
   <ItemGroup>
     <PackageReference Include="ESFA.DC.OPA.RunTime.DLLs" Version="0.1.1-beta0001" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\ESFA.DC.OPA.Service.Interface\ESFA.DC.OPA.Service.Interface.csproj" />
+    <PackageReference Include="ESFA.DC.OPA.Service.Interface" Version="0.1.0-beta0001" />
   </ItemGroup>
 
   <ItemGroup>
