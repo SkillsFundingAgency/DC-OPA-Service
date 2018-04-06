@@ -13,11 +13,13 @@ namespace ESFA.DC.OPA.Service.Builders
 {
     public class SessionBuilder : ISessionBuilder
     {
-        internal bool RulebaseInitialised { get; set; }
-        internal Rulebase Rulebase { get; set; }
-        internal Engine Engine => _engine;
-
         private readonly Engine _engine = Engine.INSTANCE;
+
+        internal bool RulebaseInitialised { get; set; }
+
+        internal Oracle.Determinations.Engine.Rulebase Rulebase { get; set; }
+
+        internal Engine Engine => _engine;
 
         public Session CreateOPASession(Stream rulebaseStream, IDataEntity globalEntity)
         {
@@ -27,6 +29,7 @@ namespace ESFA.DC.OPA.Service.Builders
                 Rulebase = Engine.GetRulebase(stream);
                 RulebaseInitialised = true;
             }
+
             Session session = Engine.CreateSession(Rulebase);
 
             var inputGlobalInstance = session.GetGlobalEntityInstance();
@@ -95,6 +98,7 @@ namespace ESFA.DC.OPA.Service.Builders
                     targetInstance.MarkContainmentComplete(true, childInstance.GetEntity());
                 }
             }
+
             return targetInstance;
         }
 
@@ -115,19 +119,15 @@ namespace ESFA.DC.OPA.Service.Builders
                 }
                 else if (attribute.GetValueType() == 16)
                 {
-                    attribute.SetValue(targetInstance,
-                                       new Oracle.Determinations.Masquerade.Util.Date(
-                                           DateTime.Parse(attributeData.Value.ToString())));
+                    attribute.SetValue(targetInstance, new Date(DateTime.Parse(attributeData.Value.ToString())));
                 }
                 else if (attribute.GetValueType() == 4)
                 {
-                    attribute.SetValue(targetInstance,
-                                       new Oracle.Determinations.Masquerade.Lang.Double(attributeData.Value.ToString()));
+                    attribute.SetValue(targetInstance, new Oracle.Determinations.Masquerade.Lang.Double(attributeData.Value.ToString()));
                 }
                 else if (attribute.GetValueType() == 8)
                 {
-                    attribute.SetValue(targetInstance,
-                                       new Oracle.Determinations.Masquerade.Lang.Double(attributeData.Value.ToString()));
+                    attribute.SetValue(targetInstance, new Oracle.Determinations.Masquerade.Lang.Double(attributeData.Value.ToString()));
                 }
                 else if (attribute.GetValueType() == 2)
                 {
@@ -140,7 +140,7 @@ namespace ESFA.DC.OPA.Service.Builders
             }
             else
             {
-                //TODO: Log something
+                // TODO: Log something
             }
         }
 
@@ -149,9 +149,8 @@ namespace ESFA.DC.OPA.Service.Builders
             ArrayList changepoints = new ArrayList();
             foreach (var temporalValueItem in valueList)
             {
-                ChangePointDate changePointDate = new ChangePointDate(temporalValueItem.ChangePoint.Year,
-                                                                      temporalValueItem.ChangePoint.Month,
-                                                                      temporalValueItem.ChangePoint.Day);
+                ChangePointDate changePointDate = new ChangePointDate(
+                    temporalValueItem.ChangePoint.Year, temporalValueItem.ChangePoint.Month, temporalValueItem.ChangePoint.Day);
 
                 ChangePoint changePoint = null;
 
@@ -174,6 +173,7 @@ namespace ESFA.DC.OPA.Service.Builders
                     changepoints.Add(changePoint);
                 }
             }
+
             return changepoints;
         }
 
@@ -181,4 +181,3 @@ namespace ESFA.DC.OPA.Service.Builders
 
     }
 }
-

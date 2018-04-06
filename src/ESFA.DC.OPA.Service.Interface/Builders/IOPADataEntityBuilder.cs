@@ -6,6 +6,6 @@ namespace ESFA.DC.OPA.Service.Interface.Builders
 {
     public interface IOPADataEntityBuilder
     {
-        IDataEntity CreateOPADataEntity(EntityInstance entityInstance, IDataEntity parentEntity, DateTime yearStartDate);
+        IDataEntity CreateOPADataEntity(EntityInstance entityInstance, IDataEntity parentEntity);
     }
 }

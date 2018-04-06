@@ -10,11 +10,15 @@ namespace ESFA.DC.OPA.Service.Builders
 {
     public class OPADataEntityBuilder : IOPADataEntityBuilder
     {
-        private DateTime _yearStartDate;
+        private readonly DateTime _yearStartDate;
 
-        public IDataEntity CreateOPADataEntity(EntityInstance entityInstance, IDataEntity parentEntity, DateTime yearStartDate)
+        public OPADataEntityBuilder(DateTime yearStartDate)
         {
             _yearStartDate = yearStartDate;
+        }
+
+        public IDataEntity CreateOPADataEntity(EntityInstance entityInstance, IDataEntity parentEntity)
+        {
             var globalEntity = MapOpaToEntity(entityInstance, parentEntity);
 
             return globalEntity;
@@ -73,10 +77,11 @@ namespace ESFA.DC.OPA.Service.Builders
                     var val = temporalValue.GetValue(index);
                     attributeData.Changepoints.Add(new TemporalValueItem(date, val, string.Empty));
                 }
+
                 return attributeData;
             }
 
-            return new AttributeData(attr.GetName(), value is String ? value.ToString().Trim() : value);
+            return new AttributeData(attr.GetName(), value is string ? value.ToString().Trim() : value);
         }
 
         protected internal void MapEntities(EntityInstance instance, List childEntities, IDataEntity dataEntity)
@@ -95,4 +100,3 @@ namespace ESFA.DC.OPA.Service.Builders
 
     }
 }
-

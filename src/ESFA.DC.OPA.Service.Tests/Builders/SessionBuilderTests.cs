@@ -27,13 +27,13 @@ namespace ESFA.DC.OPA.Service.Tests.Builders
         [Fact(DisplayName = "SessionBuilder - Create Session"), Trait("OPA Session Builder", "Unit")]
         public void CreateOPASession_SessionExists()
         {
-            //ARRANGE
+            // ARRANGE
             ISessionBuilder sessionBuilder = new SessionBuilder();
 
-            //ACT
+            // ACT
             var session = CreateSessionTestSession(sessionBuilder);
 
-            //ASSERT
+            // ASSERT
             session.Should().NotBeNull();
         }
 
@@ -43,15 +43,15 @@ namespace ESFA.DC.OPA.Service.Tests.Builders
         [Fact(DisplayName = "SessionBuilder - Create Sessions"), Trait("OPA Session Builder", "Unit")]
         public void SessionBuilder_MapToOPA_InstancesExists()
         {
-            //ARRANGE
+            // ARRANGE
             ISessionBuilder createSession1 = new SessionBuilder();
             ISessionBuilder createSession2 = new SessionBuilder();
 
-            //ACT
+            // ACT
             var session1 = CreateSessionTestSession(createSession1);
             var session2 = CreateSessionTestSession(createSession2);
 
-            //ASSERT
+            // ASSERT
             session1.Should().NotBeNull();
             session2.Should().NotBeNull();
 
@@ -64,15 +64,15 @@ namespace ESFA.DC.OPA.Service.Tests.Builders
         [Fact(DisplayName = "SessionBuilder - RulebaseInitialised false "), Trait("OPA Session Builder", "Unit")]
         public void SessionBuilder_CreateSession_rulebaseNotInitialised()
         {
-            //ARRANGE
+            // ARRANGE
             SessionBuilder sessionRBNotInitialised = new SessionBuilder();
 
-            //ACT
+            // ACT
             var rbInitPre = sessionRBNotInitialised.RulebaseInitialised;
             CreateSessionTestSession(sessionRBNotInitialised);
             var rbInitPost = sessionRBNotInitialised.RulebaseInitialised;
 
-            //ASSERT
+            // ASSERT
             rbInitPre.Should().BeFalse();
             rbInitPost.Should().BeTrue();
         }
@@ -83,10 +83,10 @@ namespace ESFA.DC.OPA.Service.Tests.Builders
         [Fact(DisplayName = "SessionBuilder - RulebaseInitialised true "), Trait("OPA Session Builder", "Unit")]
         public void SessionBuilder_CreateSession_rulebaseInitialised()
         {
-            //ARRANGE
+            // ARRANGE
             SessionBuilder sessionRBInitialised = new SessionBuilder();
 
-            //ACT
+            // ACT
             var rbInitPreFirst = sessionRBInitialised.RulebaseInitialised;
             CreateSessionTestSession(sessionRBInitialised);
             var rbInitPostFirst = sessionRBInitialised.RulebaseInitialised;
@@ -95,7 +95,7 @@ namespace ESFA.DC.OPA.Service.Tests.Builders
             CreateSessionTestSession(sessionRBInitialised);
             var rbInitPostSecond = sessionRBInitialised.RulebaseInitialised;
 
-            //ASSERT
+            // ASSERT
             rbInitPreFirst.Should().BeFalse();
             rbInitPostFirst.Should().BeTrue();
             rbInitPreSecond.Should().BeTrue();
@@ -108,13 +108,13 @@ namespace ESFA.DC.OPA.Service.Tests.Builders
         [Fact(DisplayName = "SessionBuilder - Rulebase Exists"), Trait("OPA Session Builder", "Unit")]
         public void SessionBuilder_CreateSession_RulebaseExists()
         {
-            //ARRANGE
+            // ARRANGE
             SessionBuilder sessionRBExists = new SessionBuilder();
 
-            //ACT
+            // ACT
             CreateSessionTestSession(sessionRBExists);
 
-            //ASSERT
+            // ASSERT
             sessionRBExists.Rulebase.Should().NotBeNull();
         }
 
@@ -124,14 +124,14 @@ namespace ESFA.DC.OPA.Service.Tests.Builders
         [Fact(DisplayName = "SessionBuilder - Rulebase correct"), Trait("OPA Session Builder", "Unit")]
         public void SessionBuilder_CreateSession_RulebaseCorrect()
         {
-            //ARRANGE
+            // ARRANGE
             SessionBuilder sessionRBCorrect = new SessionBuilder();
 
-            //ACT
+            // ACT
             CreateSessionTestSession(sessionRBCorrect);
             var rulebaseName = sessionRBCorrect.Rulebase.GetBaseFileName();
 
-            //ASSERT
+            // ASSERT
             rulebaseName.Should().BeEquivalentTo("Loans Bursary 17_18");
         }
 
@@ -141,13 +141,13 @@ namespace ESFA.DC.OPA.Service.Tests.Builders
         [Fact(DisplayName = "SessionBuilder - Engine Exists"), Trait("OPA Session Builder", "Unit")]
         public void SessionBuilder_CreateSession_EngineExists()
         {
-            //ARRANGE
+            // ARRANGE
             SessionBuilder sessionEngineExists = new SessionBuilder();
 
-            //ACT
+            // ACT
             CreateSessionTestSession(sessionEngineExists);
 
-            //ASSERT
+            // ASSERT
             sessionEngineExists.Engine.Should().NotBeNull();
         }
 
@@ -157,14 +157,14 @@ namespace ESFA.DC.OPA.Service.Tests.Builders
         [Fact(DisplayName = "SessionBuilder - Engine correct"), Trait("OPA Session Builder", "Unit")]
         public void SessionBuilder_CreateSession_EngineCorrect()
         {
-            //ARRANGE
+            // ARRANGE
             SessionBuilder sessionEngineCorrect = new SessionBuilder();
 
-            //ACT
+            // ACT
             CreateSessionTestSession(sessionEngineCorrect);
             var engineVersion = sessionEngineCorrect.Engine.GetVersion();
 
-            //ASSERT
+            // ASSERT
             engineVersion.Should().BeEquivalentTo("10.4.4.21");
         }
 
@@ -178,14 +178,14 @@ namespace ESFA.DC.OPA.Service.Tests.Builders
         [Fact(DisplayName = "MapToOPA - Instance exists"), Trait("OPA Session Builder", "Unit")]
         public void SessionBuilder_MapGlobalDataEntityToOpa_InstanceExists()
         {
-            //ARRANGE
+            // ARRANGE
             var sessionBuilder = new SessionBuilder();
             var session = MapToOPATestSession();
 
-            //ACT
+            // ACT
             sessionBuilder.MapGlobalDataEntityToOpa(TestGlobalEntity(), session, session.GetGlobalEntityInstance());
 
-            //ASSERT
+            // ASSERT
             session.Should().NotBeNull();
         }
 
@@ -195,17 +195,17 @@ namespace ESFA.DC.OPA.Service.Tests.Builders
         [Fact(DisplayName = "MapToOPA - Global Entity updated"), Trait("OPA Session Builder", "Unit")]
         public void SessionBuilder_MapGlobalDataEntityToOpa_GlobalEntityUpdated()
         {
-            //ARRANGE
+            // ARRANGE
             var sessionBuilder = new SessionBuilder();
             var sessionPre = MapToOPATestSession();
             var sessionPost = MapToOPATestSession();
 
-            //ACT
+            // ACT
             sessionBuilder.MapGlobalDataEntityToOpa(TestGlobalEntity(), sessionPost, sessionPost.GetGlobalEntityInstance());
             var ukprnPre = AttributeValue(sessionPre, "UKPRN");
             var ukprnPost = AttributeValue(sessionPost, "UKPRN");
 
-            //ASSERT
+            // ASSERT
             sessionPost.Should().NotBe(sessionPre);
             ukprnPre.Should().BeNull();
             ukprnPost.Should().Be(12345678);
@@ -217,12 +217,12 @@ namespace ESFA.DC.OPA.Service.Tests.Builders
         [Fact(DisplayName = "MapToOPA - Global Entity Children updated"), Trait("OPA Session Builder", "Unit")]
         public void SessionBuilder_MapGlobalDataEntityToOpa_GlobalEntityChildrenUpdated()
         {
-            //ARRANGE
+            // ARRANGE
             var sessionBuilder = new SessionBuilder();
             var sessionPre = MapToOPATestSession();
             var sessionPost = MapToOPATestSession();
 
-            //ACT
+            // ACT
             sessionBuilder.MapGlobalDataEntityToOpa(TestGlobalEntity(), sessionPost, sessionPost.GetGlobalEntityInstance());
             var learnerPre = EntityList(sessionPre);
             var learnerPost = EntityList(sessionPost);
@@ -230,11 +230,10 @@ namespace ESFA.DC.OPA.Service.Tests.Builders
             var learnerPrelist = EntityInstanceList(sessionPre, learnerPre);
             var learnerPostlist = EntityInstanceList(sessionPost, learnerPost);
 
-            //ASSERT
+            // ASSERT
             sessionPost.Should().NotBe(sessionPre);
             learnerPrelist.Should().BeNullOrEmpty();
             learnerPostlist.Count.Should().Be(1);
-
         }
 
         /// <summary>
@@ -243,14 +242,14 @@ namespace ESFA.DC.OPA.Service.Tests.Builders
         [Fact(DisplayName = "MapToOPA - Map Entity - Entity is Global"), Trait("OPA Session Builder", "Unit")]
         public void SessionBuilder_MapDataEntityToOpa_EntityIsGlobal()
         {
-            //ARRANGE
+            // ARRANGE
             var sessionBuilder = new SessionBuilder();
             var session = MapToOPATestSession();
 
-            //ACT
+            // ACT
             var instance = sessionBuilder.MapDataEntityToOpa(new DataEntity("global"), session, session.GetGlobalEntityInstance());
 
-            //ASSERT
+            // ASSERT
             instance.Should().NotBeNull();
             instance.GetEntity().IsGlobal().Should().BeTrue();
         }
@@ -261,14 +260,14 @@ namespace ESFA.DC.OPA.Service.Tests.Builders
         [Fact(DisplayName = "MapToOPA - Map Entity - Entity is not Global"), Trait("OPA Session Builder", "Unit")]
         public void SessionBuilder_MapDataEntityToOpa_EntityIsNotGlobal()
         {
-            //ARRANGE
+            // ARRANGE
             var sessionBuilder = new SessionBuilder();
             var session = MapToOPATestSession();
 
-            //ACT
+            // ACT
             var instance = sessionBuilder.MapDataEntityToOpa(new DataEntity("Learner"), session, session.GetGlobalEntityInstance());
 
-            //ASSERT
+            // ASSERT
             instance.Should().NotBeNull();
             instance.GetEntity().IsGlobal().Should().BeFalse();
         }
@@ -279,12 +278,12 @@ namespace ESFA.DC.OPA.Service.Tests.Builders
         [Fact(DisplayName = "MapToOPA - Child Entity updated"), Trait("OPA Session Builder", "Unit")]
         public void SessionBuilder_MapDataEntityToOpa_ChildEntityUpdated()
         {
-            //ARRANGE
+            // ARRANGE
             var sessionBuilder = new SessionBuilder();
             var sessionPre = MapToOPATestSession();
             var sessionPost = MapToOPATestSession();
 
-            //ACT
+            // ACT
             sessionBuilder.MapDataEntityToOpa(TestGlobalEntity(), sessionPost, sessionPost.GetGlobalEntityInstance());
             var learnerPre = EntityList(sessionPre);
             var learnerPost = EntityList(sessionPost);
@@ -292,7 +291,7 @@ namespace ESFA.DC.OPA.Service.Tests.Builders
             var learnerPrelist = EntityInstanceList(sessionPre, learnerPre);
             var learnerPostlist = EntityInstanceList(sessionPost, learnerPost);
 
-            //ASSERT
+            // ASSERT
             sessionPost.Should().NotBe(sessionPre);
             learnerPrelist.Should().BeNullOrEmpty();
             learnerPostlist.Count.Should().Be(1);
@@ -300,7 +299,7 @@ namespace ESFA.DC.OPA.Service.Tests.Builders
 
         #endregion
 
-        #region SetAttribute Tests    
+        #region SetAttribute Tests
 
         /// <summary>
         /// Return OPA Session and check if the attributes have mapped as expected
@@ -308,16 +307,16 @@ namespace ESFA.DC.OPA.Service.Tests.Builders
         [Fact(DisplayName = "MapToOPA - Set Attribute - Attribute Exists"), Trait("OPA Session Builder", "Unit")]
         public void SessionBuilder_SetAttribute_AttributeExists()
         {
-            //ARRANGE
+            // ARRANGE
             var sessionBuilder = new SessionBuilder();
             var session = MapToOPATestSession();
             var instance = session.GetGlobalEntityInstance();
             var entity = instance.GetEntity();
 
-            //ACT
-            sessionBuilder.SetAttribute(entity, instance, TestAttributeData);
+            // ACT
+            sessionBuilder.SetAttribute(entity, instance, TestAttributeData());
 
-            //ASSERT
+            // ASSERT
             var ukprn = AttributeValue(session, "UKPRN");
 
             ukprn.Should().NotBeNull();
@@ -329,16 +328,16 @@ namespace ESFA.DC.OPA.Service.Tests.Builders
         [Fact(DisplayName = "MapToOPA - Set Attribute - Attribute Correct"), Trait("OPA Session Builder", "Unit")]
         public void SessionBuilder_SetAttribute_AttributeCorrect()
         {
-            //ARRANGE
+            // ARRANGE
             var sessionBuilder = new SessionBuilder();
             var session = MapToOPATestSession();
             var instance = session.GetGlobalEntityInstance();
             var entity = instance.GetEntity();
 
-            //ACT
-            sessionBuilder.SetAttribute(entity, instance, TestAttributeData);
+            // ACT
+            sessionBuilder.SetAttribute(entity, instance, TestAttributeData());
 
-            //ASSERT
+            // ASSERT
             var ukprn = AttributeValue(session, "UKPRN");
 
             ukprn.Should().BeEquivalentTo(12345678);
@@ -350,17 +349,17 @@ namespace ESFA.DC.OPA.Service.Tests.Builders
         [Fact(DisplayName = "MapToOPA - Set Attribute - No attributes or changepoints set"), Trait("OPA Session Builder", "Unit")]
         public void SessionBuilder_SetAttribute_AttributeAndChangePointValuesNull()
         {
-            //ARRANGE
+            // ARRANGE
             var sessionBuilder = new SessionBuilder();
             var session = MapToOPATestSession();
             var instance = session.GetGlobalEntityInstance();
             var entity = instance.GetEntity();
             var attributeData = new AttributeData("UKPRN", null);
 
-            //ACT
+            // ACT
             sessionBuilder.SetAttribute(entity, instance, attributeData);
 
-            //ASSERT         
+            // ASSERT
             var ukprn = AttributeValue(session, "UKPRN");
 
             ukprn.Should().BeNull();
@@ -372,19 +371,19 @@ namespace ESFA.DC.OPA.Service.Tests.Builders
         [Fact(DisplayName = "MapToOPA - Set Attribute - Attribute and changepoints set"), Trait("OPA Session Builder", "Unit")]
         public void SessionBuilder_SetAttribute_ChangePointValuesExist()
         {
-            //ARRANGE
+            // ARRANGE
             var sessionBuilder = new SessionBuilder();
             var session = MapToOPATestSession();
             var instance = session.GetGlobalEntityInstance();
             var entity = instance.GetEntity();
 
-            var attributeData = TestAttributeData;
-            attributeData.AddChangepoints(TestChangePoints);
+            var attributeData = TestAttributeData();
+            attributeData.AddChangepoints(TestChangePoints());
 
-            //ACT
+            // ACT
             sessionBuilder.SetAttribute(entity, instance, attributeData);
 
-            //ASSERT         
+            // ASSERT
             var ukprnChangePoint = entity.GetAttribute("UKPRN").GetValue(instance);
 
             ukprnChangePoint.Should().NotBeNull();
@@ -401,16 +400,16 @@ namespace ESFA.DC.OPA.Service.Tests.Builders
         [Fact(DisplayName = "MapToOPA - MapTemporal exists"), Trait("OPA Session Builder", "Unit")]
         public void SessionBuilder_MapTemporal_Exists()
         {
-            //ARRANGE
+            // ARRANGE
             var sessionBuilder = new SessionBuilder();
 
-            var attributeData = TestAttributeData;
-            attributeData.AddChangepoints(TestChangePoints);
+            var attributeData = TestAttributeData();
+            attributeData.AddChangepoints(TestChangePoints());
 
-            //ACT
+            // ACT
             var temporal = sessionBuilder.MapTemporalValue(attributeData.Changepoints);
 
-            //ASSERT         
+            // ASSERT
             temporal.Should().NotBeNull();
         }
 
@@ -420,16 +419,16 @@ namespace ESFA.DC.OPA.Service.Tests.Builders
         [Fact(DisplayName = "MapToOPA - MapTemporal Count"), Trait("OPA Session Builder", "Unit")]
         public void SessionBuilder_MapTemporal_Count()
         {
-            //ARRANGE
+            // ARRANGE
             var sessionBuilder = new SessionBuilder();
 
-            var attributeData = TestAttributeData;
-            attributeData.AddChangepoints(TestChangePoints);
+            var attributeData = TestAttributeData();
+            attributeData.AddChangepoints(TestChangePoints());
 
-            //ACT
+            // ACT
             var temporal = sessionBuilder.MapTemporalValue(attributeData.Changepoints);
 
-            //ASSERT         
+            // ASSERT
             temporal.Count.Should().Be(2);
         }
 
@@ -439,16 +438,16 @@ namespace ESFA.DC.OPA.Service.Tests.Builders
         [Fact(DisplayName = "MapToOPA - MapTemporal values correct"), Trait("OPA Session Builder", "Unit")]
         public void SessionBuilder_MapTemporal_Correct()
         {
-            //ARRANGE
+            // ARRANGE
             var sessionBuilder = new SessionBuilder();
 
-            var attributeData = TestAttributeData;
-            attributeData.AddChangepoints(TestChangePoints);
+            var attributeData = TestAttributeData();
+            attributeData.AddChangepoints(TestChangePoints());
 
-            //ACT
+            // ACT
             var temporal = sessionBuilder.MapTemporalValue(attributeData.Changepoints);
 
-            //ASSERT         
+            // ASSERT
             temporal.Should().NotBeNull();
             temporal[0].ToString().Should().BeEquivalentTo("100.0@2017-08-01");
             temporal[1].ToString().Should().BeEquivalentTo("100.0@2017-09-01");
@@ -466,7 +465,7 @@ namespace ESFA.DC.OPA.Service.Tests.Builders
             {
                 Attributes = new Dictionary<string, IAttributeData>()
                 {
-                    {"UKPRN", new AttributeData("UKPRN", 12345678)}
+                    { "UKPRN", new AttributeData("UKPRN", 12345678) }
                 }
             };
 
@@ -475,16 +474,16 @@ namespace ESFA.DC.OPA.Service.Tests.Builders
                 {
                     Attributes = new Dictionary<string, IAttributeData>()
                     {
-                        {"LearnRefNumber", new AttributeData("LearnRefNumber", "Learner1")}
+                        { "LearnRefNumber", new AttributeData("LearnRefNumber", "Learner1") }
                     }
                 });
 
             return globalEntity;
         }
 
-        private readonly IAttributeData TestAttributeData = new AttributeData("UKPRN", 12345678);
+        private IAttributeData TestAttributeData() => new AttributeData("UKPRN", 12345678);
 
-        private readonly IEnumerable<ITemporalValueItem> TestChangePoints =
+        private IEnumerable<ITemporalValueItem> TestChangePoints() =>
             new List<ITemporalValueItem>()
             {
                 new TemporalValueItem(DateTime.Parse("2017-08-01"), 100, "currency"),
@@ -495,15 +494,15 @@ namespace ESFA.DC.OPA.Service.Tests.Builders
 
         #region Create Test Sessions
 
-        private const string RulebaseZipPath = @"ESFA.DC.OPA.Service.Tests.Rulebase.Loans Bursary 17_18.zip";
+        private Stream Stream() => Assembly.GetExecutingAssembly().GetManifestResourceStream(@"ESFA.DC.OPA.Service.Tests.Rulebase.Loans Bursary 17_18.zip");
 
         private Session CreateSessionTestSession(ISessionBuilder sessionBuilder)
         {
             var assembly = Assembly.GetExecutingAssembly();
             Session session;
-            using (Stream stream = assembly.GetManifestResourceStream(RulebaseZipPath))
+            using (Stream())
             {
-                session = sessionBuilder.CreateOPASession(stream, TestGlobalEntity());
+                session = sessionBuilder.CreateOPASession(Stream(), TestGlobalEntity());
             }
 
             return session;
@@ -514,9 +513,9 @@ namespace ESFA.DC.OPA.Service.Tests.Builders
             Engine testEngine = Engine.INSTANCE;
             var assembly = Assembly.GetExecutingAssembly();
             Session session;
-            using (Stream stream = assembly.GetManifestResourceStream(RulebaseZipPath))
+            using (Stream())
             {
-                Rulebase testRulebase = testEngine.GetRulebase(new InputStreamAdapter(stream));
+                Oracle.Determinations.Engine.Rulebase testRulebase = testEngine.GetRulebase(new InputStreamAdapter(Stream()));
                 session = testEngine.CreateSession(testRulebase);
             }
 

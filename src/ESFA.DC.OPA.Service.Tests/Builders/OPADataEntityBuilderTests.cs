@@ -23,13 +23,13 @@ namespace ESFA.DC.OPA.Service.Tests.Builders
         [Fact(DisplayName = "OPADataEntityBuilder - CreateOPADataEntity"), Trait("OPA To Data Entity Builder", "Unit")]
         public void DataEntityBuilder_CreateDataEntity_Exists()
         {
-            //ARRANGE
-            //Use Test Helpers
+            // ARRANGE
+            // Use Test Helpers
 
-            //ACT
+            // ACT
             var outputEntity = GetOutputEntity();
 
-            //ASSERT
+            // ASSERT
             outputEntity.Should().NotBeNull();
         }
 
@@ -39,13 +39,13 @@ namespace ESFA.DC.OPA.Service.Tests.Builders
         [Fact(DisplayName = "OPADataEntityBuilder - CreateOPADataEntity entities correct"), Trait("OPA To Data Entity Builder", "Unit")]
         public void DataEntityBuilder_CreateDataEntity_EntitiesCorrect()
         {
-            //ARRANGE
-            //Use Test Helpers
+            // ARRANGE
+            // Use Test Helpers
 
-            //ACT
+            // ACT
             var outputEntity = GetOutputEntity();
 
-            //ASSERT
+            // ASSERT
             outputEntity.EntityName.Should().Be("global");
             outputEntity.Children.Select(e => e.EntityName).FirstOrDefault().Should().Be("Learner");
         }
@@ -56,13 +56,13 @@ namespace ESFA.DC.OPA.Service.Tests.Builders
         [Fact(DisplayName = "OPADataEntityBuilder - CreateOPADataEntity entities count correct"), Trait("OPA To Data Entity Builder", "Unit")]
         public void DataEntityBuilder_CreateDataEntity_EntitiesCountCorrect()
         {
-            //ARRANGE
-            //Use Test Helpers
+            // ARRANGE
+            // Use Test Helpers
 
-            //ACT
+            // ACT
             var outputEntity = GetOutputEntity();
 
-            //ASSERT
+            // ASSERT
             outputEntity.IsGlobal.Should().BeTrue();
             outputEntity.Children.Select(e => e.EntityName).Count().Should().Be(1);
         }
@@ -73,15 +73,15 @@ namespace ESFA.DC.OPA.Service.Tests.Builders
         [Fact(DisplayName = "OPADataEntityBuilder - CreateOPADataEntity Attributes correct"), Trait("OPA To Data Entity Builder", "Unit")]
         public void DataEntityBuilder_CreateDataEntity_AttributesCorrect()
         {
-            //ARRANGE
-            //Use Test Helpers
+            // ARRANGE
+            // Use Test Helpers
 
-            //ACT
+            // ACT
             var outputEntity = GetOutputEntity();
             var attributes = outputEntity.Attributes.ToArray();
             var childAtttributes = outputEntity.Children.SelectMany(a => a.Attributes).ToArray();
 
-            //ASSERT
+            // ASSERT
             var ukprn = DecimalStrToInt(GetAttributeValues(attributes, "UKPRN"));
             var larsVersion = GetAttributeValues(attributes, "LARSVersion");
             var learnRefNumber = GetAttributeValues(childAtttributes, "LearnRefNumber");
@@ -97,13 +97,13 @@ namespace ESFA.DC.OPA.Service.Tests.Builders
         [Fact(DisplayName = "OPADataEntityBuilder - CreateOPADataEntity Attributes count correct"), Trait("OPA To Data Entity Builder", "Unit")]
         public void DataEntityBuilder_CreateDataEntity_AttributesCountCorrect()
         {
-            //ARRANGE
-            //Use Test Helpers
+            // ARRANGE
+            // Use Test Helpers
 
-            //ACT
+            // ACT
             var outputEntity = GetOutputEntity();
 
-            //ASSERT
+            // ASSERT
             outputEntity.Attributes.Count.Should().Be(16);
             outputEntity.Children.Select(a => a.Attributes).Count().Should().Be(1);
         }
@@ -118,13 +118,13 @@ namespace ESFA.DC.OPA.Service.Tests.Builders
         [Fact(DisplayName = "MapOpaToEntity - Global Exists"), Trait("OPA To Data Entity Builder", "Unit")]
         public void DataEntityBuilder_MapOpaToEntity_GlobalExists()
         {
-            //ARRANGE
-            //Use Test Helpers
+            // ARRANGE
+            // Use Test Helpers
 
-            //ACT
+            // ACT
             var outputEntity = SetupMapToOpDataEntity();
 
-            //ASSERT
+            // ASSERT
             outputEntity.EntityName.Should().NotBeNull();
         }
 
@@ -134,13 +134,13 @@ namespace ESFA.DC.OPA.Service.Tests.Builders
         [Fact(DisplayName = "MapOpaToEntity - Global Parent Should not exist"), Trait("OPA To Data Entity Builder", "Unit")]
         public void DataEntityBuilder_MapOpaToEntity_GlobalNoParent()
         {
-            //ARRANGE
-            //Use Test Helpers
+            // ARRANGE
+            // Use Test Helpers
 
-            //ACT
+            // ACT
             var outputEntity = SetupMapToOpDataEntity();
 
-            //ASSERT
+            // ASSERT
             outputEntity.Parent.Should().BeNull();
         }
 
@@ -150,13 +150,13 @@ namespace ESFA.DC.OPA.Service.Tests.Builders
         [Fact(DisplayName = "MapOpaToEntity - Global Correct"), Trait("OPA To Data Entity Builder", "Unit")]
         public void DataEntityBuilder_MapOpaToEntity_GlobalCorrect()
         {
-            //ARRANGE
-            //Use Test Helpers
+            // ARRANGE
+            // Use Test Helpers
 
-            //ACT
+            // ACT
             var outputEntity = SetupMapToOpDataEntity();
 
-            //ASSERT
+            // ASSERT
             outputEntity.EntityName.Should().Be("global");
             outputEntity.Attributes.Count().Should().Be(16);
         }
@@ -167,13 +167,13 @@ namespace ESFA.DC.OPA.Service.Tests.Builders
         [Fact(DisplayName = "MapOpaToEntity - Child Exists"), Trait("OPA To Data Entity Builder", "Unit")]
         public void DataEntityBuilder_MapOpaToEntity_ChildExists()
         {
-            //ARRANGE
-            //Use Test Helpers
+            // ARRANGE
+            // Use Test Helpers
 
-            //ACT
+            // ACT
             var outputEntity = SetupMapToOpDataEntity();
 
-            //ASSERT
+            // ASSERT
             outputEntity.Children.Select(c => c.EntityName).Should().NotBeNull();
         }
 
@@ -183,13 +183,13 @@ namespace ESFA.DC.OPA.Service.Tests.Builders
         [Fact(DisplayName = "MapOpaToEntity - Child's Parent Exists"), Trait("OPA To Data Entity Builder", "Unit")]
         public void DataEntityBuilder_MapOpaToEntity_ChildsParentExists()
         {
-            //ARRANGE
-            //Use Test Helpers
+            // ARRANGE
+            // Use Test Helpers
 
-            //ACT
+            // ACT
             var outputEntity = SetupMapToOpDataEntity();
 
-            //ASSERT
+            // ASSERT
             outputEntity.Children.Select(c => c.Parent).Should().NotBeNull();
         }
 
@@ -199,13 +199,13 @@ namespace ESFA.DC.OPA.Service.Tests.Builders
         [Fact(DisplayName = "MapOpaToEntity - Child's Parent Correct"), Trait("OPA To Data Entity Builder", "Unit")]
         public void DataEntityBuilder_MapOpaToEntity_ChildsParentCorrect()
         {
-            //ARRANGE
-            //Use Test Helpers
+            // ARRANGE
+            // Use Test Helpers
 
-            //ACT
+            // ACT
             var outputEntity = SetupMapToOpDataEntity();
 
-            //ASSERT
+            // ASSERT
             outputEntity.Children.Select(c => c.Parent.EntityName).Should().BeEquivalentTo("global");
             outputEntity.Children.Select(c => c.Parent.Attributes.Count).Should().BeEquivalentTo(16);
         }
@@ -216,13 +216,13 @@ namespace ESFA.DC.OPA.Service.Tests.Builders
         [Fact(DisplayName = "MapOpaToEntity - Child Correct"), Trait("OPA To Data Entity Builder", "Unit")]
         public void DataEntityBuilder_MapOpaToEntity_ChildCorrect()
         {
-            //ARRANGE
-            //Use Test Helpers
+            // ARRANGE
+            // Use Test Helpers
 
-            //ACT
+            // ACT
             var outputEntity = SetupMapToOpDataEntity();
 
-            //ASSERT
+            // ASSERT
             outputEntity.Children.Select(e => e.EntityName).Should().BeEquivalentTo("Learner");
             outputEntity.Children.Select(a => a.Attributes).Count().Should().Be(1);
         }
@@ -237,13 +237,13 @@ namespace ESFA.DC.OPA.Service.Tests.Builders
         [Fact(DisplayName = "MapAttributes - Attributes Exist"), Trait("OPA To Data Entity Builder", "Unit")]
         public void DataEntityBuilder_MapAttributes_AttributesExist()
         {
-            //ARRANGE
-            //Use Test Helpers
+            // ARRANGE
+            // Use Test Helpers
 
-            //ACT
+            // ACT
             var dataEntity = SetupMapAttributes();
 
-            //ASSERT
+            // ASSERT
             dataEntity.Attributes.Should().NotBeNull();
         }
 
@@ -253,13 +253,13 @@ namespace ESFA.DC.OPA.Service.Tests.Builders
         [Fact(DisplayName = "MapAttributes - Attributes Correct Count"), Trait("OPA To Data Entity Builder", "Unit")]
         public void DataEntityBuilder_MapAttributes_AttributesCorrectCount()
         {
-            //ARRANGE
-            //Use Test Helpers
+            // ARRANGE
+            // Use Test Helpers
 
-            //ACT
+            // ACT
             var dataEntity = SetupMapAttributes();
 
-            //ASSERT
+            // ASSERT
             dataEntity.Attributes.Count.Should().Be(16);
         }
 
@@ -269,13 +269,13 @@ namespace ESFA.DC.OPA.Service.Tests.Builders
         [Fact(DisplayName = "MapAttributes - Attributes Correct"), Trait("OPA To Data Entity Builder", "Unit")]
         public void DataEntityBuilder_MapAttributes_AttributesCorrect()
         {
-            //ARRANGE
-            //Use Test Helpers
+            // ARRANGE
+            // Use Test Helpers
 
-            //ACT
+            // ACT
             var dataEntity = SetupMapAttributes();
 
-            //ASSERT
+            // ASSERT
             var attributes = dataEntity.Attributes.ToArray();
             var ukprn = DecimalStrToInt(GetAttributeValues(attributes, "UKPRN"));
 
@@ -292,15 +292,14 @@ namespace ESFA.DC.OPA.Service.Tests.Builders
         [Fact(DisplayName = "MapOPAAttributesToDataEntity - Attributes Exist"), Trait("OPA To Data Entity Builder", "Unit")]
         public void DataEntityBuilder_MapOpaAttributesToDataEntity_AttributesExist()
         {
-            //ARRANGE
-            //Use Test Helpers
+            // ARRANGE
+            // Use Test Helpers
 
-            //ACT
+            // ACT
             var attributeList = SetupMapOpaAttribute();
 
-            //ASSERT
+            // ASSERT
             attributeList.Should().NotBeNull();
-
         }
 
         /// <summary>
@@ -309,15 +308,14 @@ namespace ESFA.DC.OPA.Service.Tests.Builders
         [Fact(DisplayName = "MapOPAAttributesToDataEntity - Attributes Count"), Trait("OPA To Data Entity Builder", "Unit")]
         public void DataEntityBuilder_MapOpaAttributesToDataEntity_AttributesCount()
         {
-            //ARRANGE
-            //Use Test Helpers
+            // ARRANGE
+            // Use Test Helpers
 
-            //ACT
+            // ACT
             var attributeList = SetupMapOpaAttribute();
 
-            //ASSERT
+            // ASSERT
             attributeList.Count.Should().Be(16);
-
         }
 
         /// <summary>
@@ -326,16 +324,15 @@ namespace ESFA.DC.OPA.Service.Tests.Builders
         [Fact(DisplayName = "MapOPAAttributesToDataEntity - Attributes Correct"), Trait("OPA To Data Entity Builder", "Unit")]
         public void DataEntityBuilder_MapOpaAttributesToDataEntity_AttributesCorrect()
         {
-            //ARRANGE
-            //Use Test Helpers
+            // ARRANGE
+            // Use Test Helpers
 
-            //ACT
+            // ACT
             var attributeList = SetupMapOpaAttribute();
 
-            //ASSERT
+            // ASSERT
             var ukprn = DecimalStrToInt(GetAttributeValues(attributeList, "UKPRN"));
             ukprn.Should().Be(12345678);
-
         }
 
         #endregion
@@ -348,15 +345,14 @@ namespace ESFA.DC.OPA.Service.Tests.Builders
         [Fact(DisplayName = "MapEntities - Global Exists"), Trait("OPA To Data Entity Builder", "Unit")]
         public void DataEntityBuilder_MapEntities_GlobalExists()
         {
-            //ARRANGE
-            //Use Test Helpers
+            // ARRANGE
+            // Use Test Helpers
 
-            //ACT
+            // ACT
             var dataEntity = SetupMapEntities();
 
-            //ASSERT
+            // ASSERT
             dataEntity.Should().NotBeNull();
-
         }
 
         /// <summary>
@@ -365,15 +361,14 @@ namespace ESFA.DC.OPA.Service.Tests.Builders
         [Fact(DisplayName = "MapEntities - Global Correct"), Trait("OPA To Data Entity Builder", "Unit")]
         public void DataEntityBuilder_MapEntities_GlobalCorrect()
         {
-            //ARRANGE
-            //Use Test Helpers
+            // ARRANGE
+            // Use Test Helpers
 
-            //ACT
+            // ACT
             var dataEntity = SetupMapEntities();
 
-            //ASSERT
+            // ASSERT
             dataEntity.EntityName.Should().Be("global");
-
         }
 
         /// <summary>
@@ -382,15 +377,14 @@ namespace ESFA.DC.OPA.Service.Tests.Builders
         [Fact(DisplayName = "MapEntities - Global Children Exists"), Trait("OPA To Data Entity Builder", "Unit")]
         public void DataEntityBuilder_MapEntities_GlobalChildrenExists()
         {
-            //ARRANGE
-            //Use Test Helpers
+            // ARRANGE
+            // Use Test Helpers
 
-            //ACT
+            // ACT
             var dataEntity = SetupMapEntities();
 
-            //ASSERT
+            // ASSERT
             dataEntity.Children.Should().NotBeNull();
-
         }
 
         /// <summary>
@@ -399,15 +393,14 @@ namespace ESFA.DC.OPA.Service.Tests.Builders
         [Fact(DisplayName = "MapEntities - Global Children Count"), Trait("OPA To Data Entity Builder", "Unit")]
         public void DataEntityBuilder_MapEntities_GlobalChildrenCount()
         {
-            //ARRANGE
-            //Use Test Helpers
+            // ARRANGE
+            // Use Test Helpers
 
-            //ACT
+            // ACT
             var dataEntity = SetupMapEntities();
 
-            //ASSERT
+            // ASSERT
             dataEntity.Children.Count.Should().Be(1);
-
         }
 
         /// <summary>
@@ -416,15 +409,14 @@ namespace ESFA.DC.OPA.Service.Tests.Builders
         [Fact(DisplayName = "MapEntities - Global Children Correct"), Trait("OPA To Data Entity Builder", "Unit")]
         public void DataEntityBuilder_MapEntities_GlobalChildrenCorrect()
         {
-            //ARRANGE
-            //Use Test Helpers
+            // ARRANGE
+            // Use Test Helpers
 
-            //ACT
+            // ACT
             var dataEntity = SetupMapEntities();
 
-            //ASSERT
+            // ASSERT
             dataEntity.Children.Select(e => e.EntityName).Should().BeEquivalentTo("Learner");
-
         }
 
         /// <summary>
@@ -433,15 +425,14 @@ namespace ESFA.DC.OPA.Service.Tests.Builders
         [Fact(DisplayName = "MapEntities - Global Children Correct Parent"), Trait("OPA To Data Entity Builder", "Unit")]
         public void DataEntityBuilder_MapEntities_GlobalChildrenCorrectParent()
         {
-            //ARRANGE
-            //Use Test Helpers
+            // ARRANGE
+            // Use Test Helpers
 
-            //ACT
+            // ACT
             var dataEntity = SetupMapEntities();
 
-            //ASSERT
+            // ASSERT
             dataEntity.Children.Select(p => p.Parent.EntityName).Should().BeEquivalentTo("global");
-
         }
 
         #endregion
@@ -454,8 +445,8 @@ namespace ESFA.DC.OPA.Service.Tests.Builders
             {
                 Attributes = new Dictionary<string, IAttributeData>()
                 {
-                    {"UKPRN", new AttributeData("UKPRN", 12345678)},
-                    {"LARSVersion", new AttributeData("LARSVersion", "Version_005")}
+                    { "UKPRN", new AttributeData("UKPRN", 12345678) },
+                    { "LARSVersion", new AttributeData("LARSVersion", "Version_005") }
                 }
             };
 
@@ -464,21 +455,19 @@ namespace ESFA.DC.OPA.Service.Tests.Builders
                 {
                     Attributes = new Dictionary<string, IAttributeData>()
                     {
-                        {"LearnRefNumber", new AttributeData("LearnRefNumber", "TestLearner")}
+                        { "LearnRefNumber", new AttributeData("LearnRefNumber", "TestLearner") }
                     }
                 });
 
             return globalEntity;
         }
 
-        private const string RulebaseZipPath = @".Rulebase.Loans Bursary 17_18.zip";
-
         private EntityInstance TestEntityInstance()
         {
             ISessionBuilder sessionBuilder = new SessionBuilder();
             Session session;
             var assembly = Assembly.GetCallingAssembly();
-            var rulebaseLocation = assembly.GetName().Name + RulebaseZipPath;
+            var rulebaseLocation = assembly.GetName().Name + @".Rulebase.Loans Bursary 17_18.zip";
 
             using (Stream stream = assembly.GetManifestResourceStream(rulebaseLocation))
             {
@@ -492,16 +481,16 @@ namespace ESFA.DC.OPA.Service.Tests.Builders
 
         private IDataEntity GetOutputEntity()
         {
-            IOPADataEntityBuilder createDataEntity = new OPADataEntityBuilder();
+            IOPADataEntityBuilder createDataEntity = new OPADataEntityBuilder(new DateTime(2017, 8, 1));
             EntityInstance entityInstance = TestEntityInstance();
             IDataEntity dataEntity = null;
 
-            return createDataEntity.CreateOPADataEntity(entityInstance, dataEntity, new DateTime(2017, 8, 1));
+            return createDataEntity.CreateOPADataEntity(entityInstance, dataEntity);
         }
 
         private IDataEntity SetupMapToOpDataEntity()
         {
-            var mapToDataEntity = new OPADataEntityBuilder();
+            var mapToDataEntity = new OPADataEntityBuilder(new DateTime(2017, 8, 1));
             EntityInstance entityInstance = TestEntityInstance();
             IDataEntity dataEntity = null;
 
@@ -510,7 +499,7 @@ namespace ESFA.DC.OPA.Service.Tests.Builders
 
         private List<IAttributeData> SetupMapOpaAttribute()
         {
-            var builder = new OPADataEntityBuilder();
+            var builder = new OPADataEntityBuilder(new DateTime(2017, 8, 1));
             var instance = TestEntityInstance();
             IDictionary<string, IAttributeData> attributeDictionary = new Dictionary<string, IAttributeData>();
             var rbAttributes = instance.GetEntity().GetAttributes();
@@ -526,7 +515,7 @@ namespace ESFA.DC.OPA.Service.Tests.Builders
 
         private IDataEntity SetupMapAttributes()
         {
-            var mapAttributes = new OPADataEntityBuilder();
+            var mapAttributes = new OPADataEntityBuilder(new DateTime(2017, 8, 1));
             EntityInstance entityInstance = TestEntityInstance();
             IDataEntity dataEntity = new DataEntity(entityInstance.GetEntity().GetName());
 
@@ -537,7 +526,7 @@ namespace ESFA.DC.OPA.Service.Tests.Builders
 
         private IDataEntity SetupMapEntities()
         {
-            var mapEntities = new OPADataEntityBuilder();
+            var mapEntities = new OPADataEntityBuilder(new DateTime(2017, 8, 1));
             var instance = TestEntityInstance();
             var childEntities = instance.GetEntity().GetChildEntities();
             var dataEntity = new DataEntity(instance.GetEntity().GetName());
@@ -566,7 +555,7 @@ namespace ESFA.DC.OPA.Service.Tests.Builders
         private int DecimalStrToInt(string value)
         {
             var valueInt = value.Substring(0, value.IndexOf('.', 0));
-            return Int32.Parse(valueInt);
+            return int.Parse(valueInt);
         }
 
         #endregion
