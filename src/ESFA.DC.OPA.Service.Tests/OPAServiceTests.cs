@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using ESFA.DC.OPA.Model;
 using ESFA.DC.OPA.Model.Interface;
 using ESFA.DC.OPA.Service.Builders;
 using ESFA.DC.OPA.Service.Interface;
+using ESFA.DC.OPA.Service.Interface.Rulebase;
+using ESFA.DC.OPA.Service.Rulebase;
 using FluentAssertions;
 using Moq;
 using Xunit;
@@ -21,13 +24,13 @@ namespace ESFA.DC.OPA.Service.Tests
         [Fact(DisplayName = "OPA Service - Initiate"), Trait("OPA Service", "Unit")]
         public void OPAService_Initiate()
         {
-            //ARRANGE
-            //Use Test Helpers
+            // ARRANGE
+            // Use Test Helpers
 
-            //ACT
+            // ACT
             var result = MockOPAService(TestDataEntity());
 
-            //ASSERT
+            // ASSERT
             result.Should().NotBeNull();
         }
 
@@ -37,15 +40,14 @@ namespace ESFA.DC.OPA.Service.Tests
         [Fact(DisplayName = "OPA Service - Initiate and check entity name"), Trait("OPA Service", "Unit")]
         public void OPAService_InitiateAndCheckEntityName()
         {
-            //ARRANGE
-            //Use Test Helpers
+            // ARRANGE
+            // Use Test Helpers
 
-            //ACT
+            // ACT
             var result = MockOPAService(TestDataEntity());
 
-            //ASSERT
+            // ASSERT
             result.EntityName.Should().BeEquivalentTo("Global");
-
         }
 
         /// <summary>
@@ -54,15 +56,14 @@ namespace ESFA.DC.OPA.Service.Tests
         [Fact(DisplayName = "OPA Service - Initiate and check child entity name"), Trait("OPA Service", "Unit")]
         public void OPAService_InitiateAndCheckChildEntityName()
         {
-            //ARRANGE
-            //Use Test Helpers
+            // ARRANGE
+            // Use Test Helpers
 
-            //ACT
+            // ACT
             var result = MockOPAService(TestDataEntity());
 
-            //ASSERT
+            // ASSERT
             result.Children.Single().EntityName.Should().BeEquivalentTo("Learner");
-
         }
 
         #endregion
@@ -75,13 +76,13 @@ namespace ESFA.DC.OPA.Service.Tests
         [Fact(DisplayName = "OPA Service - Global Attributes Exist"), Trait("OPA Service", "Unit")]
         public void OPAService_Global_Attributes_Exist()
         {
-            //ARRANGE
-            //Use Test Helpers
+            // ARRANGE
+            // Use Test Helpers
 
-            //ACT
+            // ACT
             var result = MockOPAService(TestDataEntity());
 
-            //ASSERT
+            // ASSERT
             result.Attributes.Should().NotBeNull();
         }
 
@@ -91,13 +92,13 @@ namespace ESFA.DC.OPA.Service.Tests
         [Fact(DisplayName = "OPA Service - Global Attributes Exist"), Trait("OPA Service", "Unit")]
         public void OPAService_Global_Attributes_Count()
         {
-            //ARRANGE
-            //Use Test Helpers
+            // ARRANGE
+            // Use Test Helpers
 
-            //ACT
+            // ACT
             var result = MockOPAService(TestDataEntity());
 
-            //ASSERT
+            // ASSERT
             result.Attributes.Count.Should().Be(16);
         }
 
@@ -107,13 +108,13 @@ namespace ESFA.DC.OPA.Service.Tests
         [Fact(DisplayName = "OPA Service - Global - isGlobal True"), Trait("OPA Service", "Unit")]
         public void OPAService_Global_isGlobal()
         {
-            //ARRANGE
-            //Use Test Helpers
+            // ARRANGE
+            // Use Test Helpers
 
-            //ACT
+            // ACT
             var result = MockOPAService(TestDataEntity());
 
-            //ASSERT
+            // ASSERT
             result.IsGlobal.Should().BeTrue();
         }
 
@@ -123,13 +124,13 @@ namespace ESFA.DC.OPA.Service.Tests
         [Fact(DisplayName = "OPA Service - Global EntityName Exist"), Trait("OPA Service", "Unit")]
         public void OPAService_Global_EntityName_Exists()
         {
-            //ARRANGE
-            //Use Test Helpers
+            // ARRANGE
+            // Use Test Helpers
 
-            //ACT
+            // ACT
             var result = MockOPAService(TestDataEntity());
 
-            //ASSERT
+            // ASSERT
             result.EntityName.Should().NotBeNullOrEmpty();
         }
 
@@ -139,13 +140,13 @@ namespace ESFA.DC.OPA.Service.Tests
         [Fact(DisplayName = "OPA Service - Global EntityName Exist"), Trait("OPA Service", "Unit")]
         public void OPAService_Global_EntityName_Correct()
         {
-            //ARRANGE
-            //Use Test Helpers
+            // ARRANGE
+            // Use Test Helpers
 
-            //ACT
+            // ACT
             var result = MockOPAService(TestDataEntity());
 
-            //ASSERT
+            // ASSERT
             result.EntityName.Should().Be("global");
         }
 
@@ -155,13 +156,13 @@ namespace ESFA.DC.OPA.Service.Tests
         [Fact(DisplayName = "OPA Service - Global Children Exist"), Trait("OPA Service", "Unit")]
         public void OPAService_Global_Children_Exist()
         {
-            //ARRANGE
-            //Use Test Helpers
+            // ARRANGE
+            // Use Test Helpers
 
-            //ACT
+            // ACT
             var result = MockOPAService(TestDataEntity());
 
-            //ASSERT
+            // ASSERT
             result.Children.Should().NotBeNull();
         }
 
@@ -171,13 +172,13 @@ namespace ESFA.DC.OPA.Service.Tests
         [Fact(DisplayName = "OPA Service - Global Children Count"), Trait("OPA Service", "Unit")]
         public void OPAService_Global_Children_Count()
         {
-            //ARRANGE
-            //Use Test Helpers
+            // ARRANGE
+            // Use Test Helpers
 
-            //ACT
+            // ACT
             var result = MockOPAService(TestDataEntity());
 
-            //ASSERT
+            // ASSERT
             result.Children.Count.Should().Be(1);
         }
 
@@ -187,13 +188,13 @@ namespace ESFA.DC.OPA.Service.Tests
         [Fact(DisplayName = "OPA Service - Global Children EntityName Correct"), Trait("OPA Service", "Unit")]
         public void OPAService_Global_Children_EntityNameCorrect()
         {
-            //ARRANGE
-            //Use Test Helpers
+            // ARRANGE
+            // Use Test Helpers
 
-            //ACT
+            // ACT
             var result = MockOPAService(TestDataEntity());
 
-            //ASSERT
+            // ASSERT
             result.Children.Select(e => e.EntityName).Should().BeEquivalentTo("Learner");
         }
 
@@ -203,13 +204,13 @@ namespace ESFA.DC.OPA.Service.Tests
         [Fact(DisplayName = "OPA Service - Global Children Attributes Exist"), Trait("OPA Service", "Unit")]
         public void OPAService_Global_Children_Attributes_Exist()
         {
-            //ARRANGE
-            //Use Test Helpers
+            // ARRANGE
+            // Use Test Helpers
 
-            //ACT
+            // ACT
             var result = MockOPAService(TestDataEntity());
 
-            //ASSERT
+            // ASSERT
             result.Children.Select(a => a.Attributes).Should().NotBeNullOrEmpty();
         }
 
@@ -219,13 +220,13 @@ namespace ESFA.DC.OPA.Service.Tests
         [Fact(DisplayName = "OPA Service - Global Children Attributes Count"), Trait("OPA Service", "Unit")]
         public void OPAService_Global_Children_AttributesCount()
         {
-            //ARRANGE
-            //Use Test Helpers
+            // ARRANGE
+            // Use Test Helpers
 
-            //ACT
+            // ACT
             var result = MockOPAService(TestDataEntity());
 
-            //ASSERT
+            // ASSERT
             result.Children.Select(a => a.Attributes.Count).Should().BeEquivalentTo(7);
         }
 
@@ -239,13 +240,13 @@ namespace ESFA.DC.OPA.Service.Tests
         [Fact(DisplayName = "OPA Service - Global Attribute UKPRN Exists"), Trait("OPA Service", "Unit")]
         public void OPAService_Data_Global_UKPRN_Exists()
         {
-            //ARRANGE
-            //Use Test Helpers
+            // ARRANGE
+            // Use Test Helpers
 
-            //ACT
+            // ACT
             var result = MockOPAService(TestDataEntity());
 
-            //ASSERT
+            // ASSERT
             AttributeValue(result, "UKPRN").Should().NotBeNull();
         }
 
@@ -255,13 +256,13 @@ namespace ESFA.DC.OPA.Service.Tests
         [Fact(DisplayName = "OPA Service - Global Attribute UKPRN Correct"), Trait("OPA Service", "Unit")]
         public void OPAService_Data_Global_UKPRN_Correct()
         {
-            //ARRANGE
-            //Use Test Helpers
+            // ARRANGE
+            // Use Test Helpers
 
-            //ACT
+            // ACT
             var result = MockOPAService(TestDataEntity());
 
-            //ASSERT
+            // ASSERT
             AttributeValue(result, "UKPRN").Should().Be(12345678);
         }
 
@@ -271,13 +272,13 @@ namespace ESFA.DC.OPA.Service.Tests
         [Fact(DisplayName = "OPA Service - Learner Attribute LearnRefNumber Exists"), Trait("OPA Service", "Unit")]
         public void OPAService_Data_Learner_LearnRefNumber_Exists()
         {
-            //ARRANGE
-            //Use Test Helpers
+            // ARRANGE
+            // Use Test Helpers
 
-            //ACT
+            // ACT
             var result = MockOPAService(TestDataEntity());
 
-            //ASSERT
+            // ASSERT
             result.Children.Select(l => l.LearnRefNumber).Should().NotBeNull();
         }
 
@@ -287,13 +288,13 @@ namespace ESFA.DC.OPA.Service.Tests
         [Fact(DisplayName = "OPA Service - Learner Attribute LearnRefNumber Correct"), Trait("OPA Service", "Unit")]
         public void OPAService_Data_Learner_LearnRefNumber_Correct()
         {
-            //ARRANGE
-            //Use Test Helpers
+            // ARRANGE
+            // Use Test Helpers
 
-            //ACT
+            // ACT
             var result = MockOPAService(TestDataEntity());
 
-            //ASSERT
+            // ASSERT
             result.Children.Select(l => l.LearnRefNumber).Should().BeEquivalentTo("Learner1");
         }
 
@@ -309,7 +310,7 @@ namespace ESFA.DC.OPA.Service.Tests
             {
                 Attributes = new Dictionary<string, IAttributeData>()
                 {
-                    {"UKPRN", new AttributeData("UKPRN", 12345678)}
+                    { "UKPRN", new AttributeData("UKPRN", 12345678) }
                 }
             };
 
@@ -318,7 +319,7 @@ namespace ESFA.DC.OPA.Service.Tests
                 {
                     Attributes = new Dictionary<string, IAttributeData>()
                     {
-                        {"LearnRefNumber", new AttributeData("LearnRefNumber", "Learner1")}
+                        { "LearnRefNumber", new AttributeData("LearnRefNumber", "Learner1") }
                     }
                 });
 
@@ -329,18 +330,33 @@ namespace ESFA.DC.OPA.Service.Tests
 
         #region Create Test Service
 
-        private const string rulebaseZipPath = @".Rulebase.Loans Bursary 17_18.zip";
+        private IRulebaseProvider RulebaseProviderMock()
+        {
+            var rulebaseZipPath =
+                Assembly.GetCallingAssembly().GetManifestResourceNames()
+                .Where(n => n.Contains("Rulebase"))
+                .Select(r => r).SingleOrDefault();
 
-        private readonly Mock<IOPAService> opaServiceMock = new Mock<IOPAService>();
+            return new RulebaseProvider(rulebaseZipPath);
+        }
+
+        private IRulebaseProviderFactory MockRulebaseProviderFactory()
+        {
+            var mock = new Mock<IRulebaseProviderFactory>();
+
+            mock.Setup(m => m.Build()).Returns(RulebaseProviderMock());
+
+            return mock.Object;
+        }
 
         private IOPAService MockTestObject()
         {
-            return new OPAService(new SessionBuilder(), new OPADataEntityBuilder(), rulebaseZipPath, new DateTime(2017, 8, 1));
+            return new OPAService(new SessionBuilder(), new OPADataEntityBuilder(new DateTime(2017, 8, 1)), MockRulebaseProviderFactory());
         }
 
         private IDataEntity MockOPAService(IDataEntity dataEntity)
         {
-            var serviceMock = opaServiceMock;
+            var serviceMock = new Mock<IOPAService>();
 
             serviceMock.Setup(sm => sm.ExecuteSession(dataEntity)).Returns(TestDataEntity);
             var mockData = MockTestObject();
@@ -363,4 +379,3 @@ namespace ESFA.DC.OPA.Service.Tests
 
     }
 }
-

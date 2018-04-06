@@ -1,9 +1,9 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Reflection;
 using ESFA.DC.OPA.Model.Interface;
 using ESFA.DC.OPA.Service.Interface;
 using ESFA.DC.OPA.Service.Interface.Builders;
+using ESFA.DC.OPA.Service.Interface.Rulebase;
 using Oracle.Determinations.Engine;
 
 namespace ESFA.DC.OPA.Service
@@ -12,26 +12,22 @@ namespace ESFA.DC.OPA.Service
     {
         private readonly ISessionBuilder _sessionBuilder;
         private readonly IOPADataEntityBuilder _dataEntityBuilder;
-        private readonly string _rulebaseZipPath;
-        private readonly DateTime _yearStartDate;
+        private readonly IRulebaseProviderFactory _rulebaseProviderFactory;
 
-        public OPAService(ISessionBuilder sessionBuilder, IOPADataEntityBuilder dataEntityBuilder, string rulebaseZipPath, DateTime yearStartDate)
+        public OPAService(ISessionBuilder sessionBuilder, IOPADataEntityBuilder dataEntityBuilder, IRulebaseProviderFactory rulebaseProviderFactory)
         {
             _sessionBuilder = sessionBuilder;
             _dataEntityBuilder = dataEntityBuilder;
-            _rulebaseZipPath = rulebaseZipPath;
-            _yearStartDate = yearStartDate;
+            _rulebaseProviderFactory = rulebaseProviderFactory;
         }
 
         public IDataEntity ExecuteSession(IDataEntity globalEntity)
         {
-            var assembly = Assembly.GetCallingAssembly();
-
-            var rulebaseLocation = assembly.GetName().Name + _rulebaseZipPath;
+            var rulebaseProvider = _rulebaseProviderFactory.Build();
 
             Session session;
 
-            using (Stream stream = assembly.GetManifestResourceStream(rulebaseLocation))
+            using (Stream stream = rulebaseProvider.GetStream(Assembly.GetCallingAssembly()))
             {
                 session = _sessionBuilder.CreateOPASession(stream, globalEntity);
             }
@@ -39,7 +35,7 @@ namespace ESFA.DC.OPA.Service
             session.Think();
 
             var outputGlobalInstance = session.GetGlobalEntityInstance();
-            var outputEntity = _dataEntityBuilder.CreateOPADataEntity(outputGlobalInstance, null, _yearStartDate);
+            var outputEntity = _dataEntityBuilder.CreateOPADataEntity(outputGlobalInstance, null);
 
             return outputEntity;
         }
